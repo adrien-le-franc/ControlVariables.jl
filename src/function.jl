@@ -76,11 +76,11 @@ function Noises(value::Array{Float64,3}, probability::Array{Float64,2})
 		error("horizon mismatch - values : $(horizon) != probabilities : $(size(probability, 2))")
 	end
 
-	variables = RandomVariable[]
+	variables = Array{RandomVariable,1}(undef, horizon)
 
 	for t in 1:horizon
 		rv = RandomVariable(value[:, :, t], probability[:, t])
-		push!(variables, rv)
+		variables[t] = rv
 	end
 
 	return Noises(variables)
